@@ -1,4 +1,4 @@
-# Zandatsu Fighting Controller v1.2
+# Zandatsu Fighting Controller v1.3
 
 # Introduction
 As my first electronics project and as a fighting game player, I've decided to build this controller.
