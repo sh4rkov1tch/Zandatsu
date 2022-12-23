@@ -11,15 +11,15 @@
 
 #define BOARD_LEDS_PIN 0
 
-#define LED_BRIGHTNESS_MAXIMUM 100
+#define LED_BRIGHTNESS_MAXIMUM 120
 #define LED_BRIGHTNESS_STEPS 5
 #define LED_FORMAT LED_FORMAT_GRB
 #define LEDS_PER_PIXEL 1
 
 #define PIN_DPAD_UP     1
 #define PIN_DPAD_DOWN   2
-#define PIN_DPAD_RIGHT  3
-#define PIN_DPAD_LEFT   4
+#define PIN_DPAD_LEFT   3
+#define PIN_DPAD_RIGHT  4
 #define PIN_BUTTON_B1   5
 #define PIN_BUTTON_B2   6
 #define PIN_BUTTON_R2   7
@@ -37,11 +37,12 @@
 #define PIN_BUTTON_TURBO -1
 #define PIN_SLIDER_LS   -1
 #define PIN_SLIDER_RS   -1
+#define PIN_BUTTON_REVERSE -1
 
-#define LEDS_DPAD_LEFT   0
-#define LEDS_DPAD_DOWN   1
-#define LEDS_DPAD_RIGHT  2
-#define LEDS_DPAD_UP     3
+#define LEDS_DPAD_UP     0
+#define LEDS_DPAD_LEFT   1
+#define LEDS_DPAD_DOWN   2
+#define LEDS_DPAD_RIGHT  3
 #define LEDS_BUTTON_B1   4
 #define LEDS_BUTTON_B2   5
 #define LEDS_BUTTON_R2   6
@@ -52,22 +53,21 @@
 #define LEDS_BUTTON_L1   11
 
 #define DEFAULT_SOCD_MODE SOCD_MODE_NEUTRAL
-#define BUTTON_LAYOUT BUTTON_LAYOUT_STICKLESS
-#define BUTTON_LAYOUT_RIGHT BUTTON_LAYOUT_STICKLESS
+// Reverse Button section
 
-#define LED_BRIGHTNESS_MAXIMUM 100
-#define LED_BRIGHTNESS_STEPS 5
-#define LED_FORMAT LED_FORMAT_GRB
-#define LEDS_PER_PIXEL 1
+#define REVERSE_UP_DEFAULT 0
+#define REVERSE_DOWN_DEFAULT 0
+#define REVERSE_LEFT_DEFAULT 0
+#define REVERSE_RIGHT_DEFAULT 0
 
-#define BOARD_LEDS_PIN 0
+
+#define REVERSE_LED_PIN -1
 
 #define PLED_TYPE PLED_TYPE_NONE
 #define PLED1_PIN -1
 #define PLED2_PIN -1
 #define PLED3_PIN -1
 #define PLED4_PIN -1
-
 
 // This is the Analog section.
 // In this section you can specify if Analog is enabled, and, if endabled, which pins will be used for it.
@@ -130,7 +130,9 @@
 #define I2C_SPEED 800000
 #define DISPLAY_FLIP 0
 #define DISPLAY_INVERT 0
-
+#define BUTTON_LAYOUT BUTTON_LAYOUT_KEYBOARD_ANGLED
+#define BUTTON_LAYOUT_RIGHT BUTTON_LAYOUT_SEGA2P
 #define SPLASH_MODE NOSPLASH
+#define SPLASH_CHOICE MAIN
 
 #endif
