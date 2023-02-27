@@ -8,13 +8,15 @@
 
 #include <GamepadEnums.h>
 
+/* Zandatsu Rev 1.3 BoardConfig !*/
 
-#define BOARD_LEDS_PIN 0
-
-#define LED_BRIGHTNESS_MAXIMUM 120
-#define LED_BRIGHTNESS_STEPS 5
-#define LED_FORMAT LED_FORMAT_GRB
-#define LEDS_PER_PIXEL 1
+// This is the main pin definition section.
+// This will let you specify which GPIO pin each button is assigned too.
+// You can set any of the main pins as `-1` to disable it.
+// The Turbo pin and LS + RS slider pins can also be set to `-1` to disable that functionality.
+// Please note that only when `PIN_BUTTON_TURBO` is set to `-1` will the `T##` be removed from a connected display.
+// Please note that only when `PIN_SLIDER_LS` and  `PIN_SLIDER_RS` are set to `-1` will the button combo shortcut for DP/LS/RS work.
+// The buttons are listed in GP2040 configuration, beside each the listed order is *GP2040 / Xinput / Switch / PS3 / Directinput / Arcade*
 
 #define PIN_DPAD_UP     1
 #define PIN_DPAD_DOWN   2
@@ -39,6 +41,49 @@
 #define PIN_SLIDER_RS   -1
 #define PIN_BUTTON_REVERSE -1
 
+
+// This is the SOCD section.
+// SOCD stands for `simultaneous opposing cardinal directions`.
+// There are three options for `DEFAULT_SOCD_MODE` currently:
+// 1 - `SOCD_MODE_NEUTRAL` - This is a neutral SOCD.  EG. when you press `up` + `down` no input will be registered.
+// 2 - `SOCD_MODE_UP_PRIORITY` - This is up priority SOCD.  EG. when you press `up` + `down` `up` will be registered.
+// 3 - `SOCD_MODE_SECOND_INPUT_PRIORITY` - This is last priority SOCD.  EG. when you press and hold `up` then press `down` `down` will be registered.
+
+#define DEFAULT_SOCD_MODE SOCD_MODE_NEUTRAL
+
+
+// This is the LEDs section.
+// The default `TURBO_LED_PIN` pin is set to `15` ( it is recommended to run through 3V3(OUT) with a resistor)
+// The Turbo LED will flash at a speed consistant with the set speed of the Turbo when a Turbo button is active.
+// It is recommended to disable the `TURBO_LED_PIN` by setting it to `-1` if you are sensitive of flashing lights.
+// The default `BOARD_LEDS_PIN` pin is set to `28`.
+// The board LED pin will allow you to connect addressible RGB LEDs on the Pico.
+// Addressible RGB LEDs should be connected to the `VBUS` pin (#40), an avalible ground pin and the defined `BOARD_LEDS_PIN`.
+// Special note - You should only ever use addressible RGB LEDs that are rated for 5v operation on the Pico.
+// The defualt `LED_BRIGHTNESS_MAXIMUM` value is `50`.
+// This will change how bright the LEDs are with `0` being off and `100` being full brightness.
+// The minimum `LED_BRIGHTNESS_MAXIMUM` value is `0`.
+// The maximum `LED_BRIGHTNESS_MAXIMUM` value is `100`.
+// The defualt `LED_BRIGHTNESS_STEPS` value is `5`.
+// This will change how many brightness steps there are when increasing or decreasing the brightness of the LEDs via the onboard shortcut.
+// It is recommend to keep this value at `5` or `10`.
+// The defualt `LED_FORMAT` is `LED_FORMAT_GRB`.
+// You can also choose the `LED_FORMAT` of `LED_FORMAT_RGB` if your addressible RGB LEDs are not working as intended.
+// The defualt `LEDS_PER_PIXEL` is set to `1`.
+// This will change how many addressible RGB LEDs there are per button.
+// The default LEDS_[BUTTON] is an order and has nothing to do with what GPIO pin something is connected to.
+// Unless you are planning on running custom animations I would recommmend you leave this as is.
+
+#define TURBO_ENABLED 0
+#define TURBO_LED_PIN -1
+
+#define BOARD_LEDS_PIN 0
+
+#define LED_BRIGHTNESS_MAXIMUM 120
+#define LED_BRIGHTNESS_STEPS 5
+#define LED_FORMAT LED_FORMAT_GRB
+#define LEDS_PER_PIXEL 1
+
 #define LEDS_DPAD_UP     0
 #define LEDS_DPAD_LEFT   1
 #define LEDS_DPAD_DOWN   2
@@ -52,22 +97,23 @@
 #define LEDS_BUTTON_R1   10
 #define LEDS_BUTTON_L1   11
 
-#define DEFAULT_SOCD_MODE SOCD_MODE_NEUTRAL
-// Reverse Button section
 
-#define REVERSE_UP_DEFAULT 0
-#define REVERSE_DOWN_DEFAULT 0
-#define REVERSE_LEFT_DEFAULT 0
-#define REVERSE_RIGHT_DEFAULT 0
-
-
-#define REVERSE_LED_PIN -1
+// This is the Player LED section.
+// In this section you can specify if Player LEDs will be active, and, if active, which pins will be used for them.
+// The defualt is `PLED_TYPE_NONE` which will turn the Player LEDs off.
+// The default pin for each Player LED is `-1` which disables it.
+// To enable a `PLED#_PIN`, replace the `-1` with the GPIO pin number that is desired.
+// There are three options for `PLED_TYPE` currently:
+// 1 - `PLED_TYPE_NONE` - This will disable the Player LEDs
+// 2 - `PLED_TYPE_PWM` - This will enable the Player LEDs ( it is recommended to run through 3V3(OUT) with a resistor)
+// 3 - `PLED_TYPE_RGB` - This will enable the Player LEDs as addressible RGB LEDs (please not that this has not been implemented yet)
 
 #define PLED_TYPE PLED_TYPE_NONE
 #define PLED1_PIN -1
 #define PLED2_PIN -1
 #define PLED3_PIN -1
 #define PLED4_PIN -1
+
 
 // This is the Analog section.
 // In this section you can specify if Analog is enabled, and, if endabled, which pins will be used for it.
@@ -76,7 +122,6 @@
 
 #define ANALOG_ADC_VRX -1
 #define ANALOG_ADC_VRY -1
-
 
 // This is the I2C Display section (commonly known as the OLED display section).
 // In this section you can specify if a display as been enabled, which pins are assined to it, the block address and speed.
@@ -91,8 +136,10 @@
 // Some smaller displays (like 0.96" and 1.31") can go up to `800000` or even `1000000`.
 // The default `DISPLAY_FLIP` is `0`.
 // This can be changed to `1` to have the dispaly output flipped.
-// The default `DISPLAY_INVERY` is `0`.
+// The default `DISPLAY_INVERT` is `0`.
 // This can be changed to `1` to have the color on the display inverted.
+// The default `DISPLAY_SAVER_TIMEOUT` is `0`.
+// This can be changed to a number in minutes which will be the inactivity timeout for the display to turn off.
 // The default `BUTTON_LAYOUT` is `BUTTON_LAYOUT_STICK` which will show an arcade stick on the left hand side of the display.
 // There are seven options for `BUTTON_LAYOUT` currently:
 // 1 - BUTTON_LAYOUT_STICK - This is a basic joystick layout
@@ -126,13 +173,58 @@
 #define HAS_I2C_DISPLAY 0
 #define I2C_SDA_PIN -1
 #define I2C_SCL_PIN -1
-#define I2C_BLOCK i2c1
-#define I2C_SPEED 800000
+#define I2C_BLOCK i2c0
+#define I2C_SPEED 400000
 #define DISPLAY_FLIP 0
 #define DISPLAY_INVERT 0
+#define DISPLAY_SAVER_TIMEOUT 0
+
+// I2C Analog ADS1219 Add-on Options
+#define I2C_ANALOG1219_SDA_PIN -1
+#define I2C_ANALOG1219_SCL_PIN -1
+#define I2C_ANALOG1219_BLOCK i2c0
+#define I2C_ANALOG1219_SPEED 400000
+#define I2C_ANALOG1219_ADDRESS 0x40
+
+// Reverse Button section
+#define REVERSE_LED_PIN -1
+#define REVERSE_UP_DEFAULT 0
+#define REVERSE_DOWN_DEFAULT 0
+#define REVERSE_LEFT_DEFAULT 0
+#define REVERSE_RIGHT_DEFAULT 0
+
 #define BUTTON_LAYOUT BUTTON_LAYOUT_KEYBOARD_ANGLED
 #define BUTTON_LAYOUT_RIGHT BUTTON_LAYOUT_SEGA2P
 #define SPLASH_MODE NOSPLASH
 #define SPLASH_CHOICE MAIN
+
+// Board LED Add-on Setting
+// BOARD_LED_OFF  - Turns the on-board LED off
+// MODE_INDICATOR - On-board LED blinks on various frequencies depending
+//                  on the current mode (config, normal, or no USB data)
+// INPUT_TEST     - Blinks whenever any input is made
+
+#define BOARD_LED_TYPE BOARD_LED_OFF
+
+// Dual Directional Add-on Options
+
+#define PIN_DUAL_DIRECTIONAL_UP -1
+#define PIN_DUAL_DIRECTIONAL_DOWN -1
+#define PIN_DUAL_DIRECTIONAL_LEFT -1
+#define PIN_DUAL_DIRECTIONAL_RIGHT -1
+#define DUAL_DIRECTIONAL_STICK_MODE DPAD_MODE_DIGITAL
+#define DUAL_DIRECTIONAL_COMBINE_MODE DUAL_COMBINE_MODE_MIXED
+
+// BOOTSEL Button Add-on setting
+#define BOOTSEL_BUTTON_MASK 0 // 0 means none, get other mask from GamepadState.h
+
+// This is the Buzzer Speaker section.
+// In this section you can specify if Buzzer Speaker will be active, and, if active, which pin will be used for them.
+// The default is `BUZZER_ENABLED` which will turn the Buzzer Speaker off.
+// The default pin for Buzzer Speaker is `-1` which will turn the Buzzer Speaker off.
+// The default volume for Buzzer Speaker is 100 (max).
+#define BUZZER_ENABLED 0
+#define BUZZER_PIN -1
+#define BUZZER_VOLUME 100
 
 #endif
