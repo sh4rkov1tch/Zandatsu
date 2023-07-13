@@ -5,7 +5,7 @@ As my first electronics project and as a fighting game player, I've decided to b
 It's a small Mixbox-style controller running with an RP2040-Zero and GP2040CE at its core.
 It is using MX-Style switches and Kailh hotswap sockets.
 
-![Preview](Assets/zandatsu_image0.png)
+![Preview](Assets/zandatsu_image2.png)
 
 # Credits
 - FeralAI and sleepunit for the awesome GP2040 firmware and the help they gave me through this project
